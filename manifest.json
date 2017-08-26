@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Blockchain DNS",
+  "version": "1.0.1",
+  "description": "Resolves domains from blockchain name systems using BDNS API. Supported TLDs: .bit (Namecoin), .lib .bazar .coin .emc (Emercoin).",
+  "icons": {
+    "16": "icon-16.png",
+    "24": "icon-24.png",
+    "32": "icon-32.png",
+    "64": "icon-64.png",
+    "128": "icon-128.png"
+  },
+  "background": {
+    "scripts": ["common.js", "cache.js", "bdns.js"]
+  },
+  "permissions": [
+    "webRequest", "webRequestBlocking", "proxy", "notifications", "alarms",
+    "https://bdns.bz/*", "https://bdns.io/*",
+    "*://*.bit/*",   "ftp://*.bit/*",
+    "*://*.lib/*",   "ftp://*.lib/*",
+    "*://*.emc/*",   "ftp://*.emc/*",
+    "*://*.bazar/*", "ftp://*.bazar/*",
+    "*://*.coin/*",  "ftp://*.coin/*"
+  ],
+  "homepage_url": "https://blockchain-dns.info"
+}
