@@ -1,7 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Blockchain DNS",
-  "version": "1.0.1",
+  "short_name": "B-DNS",
+  "version": "1.0.5",
   "description": "Resolves domains from blockchain name systems using BDNS API. Supported TLDs: .bit (Namecoin), .lib .bazar .coin .emc (Emercoin).",
   "icons": {
     "16": "icon-16.png",

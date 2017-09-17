@@ -8,6 +8,8 @@ B-DNS addon for Chrome lets you surf Namecoin and Emercoin domains:
 * *.bazar*
 * *.coin*
 
+-------
+
 **Attention: Chrome requires `http://` prefix**
 
 If you type an address like `nx.bit` into the address bar and hit Enter - you will be taken to Google search page. You have to type `http://nx.bit` instead. See [this issue for details](https://github.com/B-DNS/Chrome/issues/2).
