@@ -21,7 +21,7 @@
     periodically refresh that tab; this can't be told apart from user doing so manually.
   * Chrome doesn't let addons handle URLs entered without scheme, i.e. "foo.lib"
     won't be handled (Google search will open instead) - "http(s)://foo.lib" has to
-    be typed explicitly.
+    be typed explicitly ("foo.lib/" will also work, as it was discovered).
   * Using https:// is useless because there is no way to obtain a valid certificate
     for unofficial TLDs; Chrome will block this request with proxy security error
     message (and no way to bypass/add exception as in Firefox).
@@ -168,9 +168,65 @@ chrome.webRequest.onBeforeRequest.addListener(function (details) {
   }
 }, allURLs, ["blocking"]);
 
+chrome.webRequest.onErrorOccurred.addListener(function (details) {
+  //console.dir(details);
+
+  var req = details.requestId;
+  var url = parseURL(details.url);
+  console.log('BDNS: #' + req + ' (' + url.domain + '): ' + details.error); //-
+
+  switch (details.error) {
+  // Proxy error. Fired once, only if all IPs from the list of domain's IPs are down.
+  case 'net::ERR_PROXY_CONNECTION_FAILED':
+    if (cache.has(url.domain)) {
+      showThrottledNotification(url.domain, url.domain + ' is down');
+    }
+
+    break;
+  }
+}, allURLs);
+
 chrome.alarms.create({periodInMinutes: 1});
 
 chrome.alarms.onAlarm.addListener(function () {
   var count = cache.prune();
   console.log('BDNS: deleted ' + count + ' expired entries; cache size = ' + cache.length); //-
 });
+
+var tabSupport = {};
+var activeTab;
+
+chrome.tabs.onActivated.addListener(function (info) {
+  activeTab = info.tabId;
+  console.info('BDNS: tab #' + activeTab + ' now active'); //-
+
+  var supported = tabSupport[activeTab];
+  chrome.browserAction[!supported ? 'enable' : 'disable']();
+});
+
+chrome.tabs.onUpdated.addListener(function (id, changeInfo) {
+  var url = parseURL(changeInfo.url || '');
+
+  if (url) {
+    var supported = isSupportedTLD(url.tld);
+
+    console.info('BDNS: tab #' + id + ' updated to ' + (supported ? '' : 'un') + 'supported TLD, domain: ' + url.domain); //-
+
+    if (supported) {
+      tabSupport[id] = supported;
+    }
+
+    if (activeTab == id) {
+      // Passing tabId doesn't seem to stick in Chrome like it does in Firefox;
+      // button's state is not restored when switching tabs.
+      chrome.browserAction[!supported ? 'enable' : 'disable']();
+    }
+  }
+});
+
+chrome.browserAction.onClicked.addListener(function () {
+  chrome.tabs.create({
+    url: "https://blockchain-dns.info"
+  });
+});
+
