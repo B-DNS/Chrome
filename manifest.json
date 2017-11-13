@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Blockchain DNS",
   "short_name": "B-DNS",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Resolves domains from blockchain name systems: .bit (Namecoin), .lib .bazar .coin .emc (Emercoin), .bbs and others (OpenNIC).",
   "icons": {
     "16": "icon-16.png",
