@@ -28,6 +28,8 @@ B-DNS is a public web resolver. Read more at https://blockchain-dns.info (API de
 
 ...And we're also [giving out NMC/EMC domains for free](https://blockchain-dns.info/giveaway).
 
+--------
+
 ## Installing Debug Version
 
 You can permanently load a debug (unsigned) extension into Chrome, i.e. it will survive restart.
@@ -44,4 +46,3 @@ You can permanently load a debug (unsigned) extension into Chrome, i.e. it will 
 ![Step 2](https://blockchain-dns.info/img/debug-load/chrome-2.png)
 ![Step 3](https://blockchain-dns.info/img/debug-load/chrome-3.png)
 ![Step 4](https://blockchain-dns.info/img/debug-load/chrome-4.png)
-
